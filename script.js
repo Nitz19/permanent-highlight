@@ -1,41 +1,38 @@
 const likeButton = document.getElementById("like");
 const dislikeButton = document.getElementById("dislike");
+const highlights = { green: [], red: [] };
 
 likeButton.addEventListener("change", function () {
   if (this.checked) {
-    document.addEventListener("mouseup", highlightSelectedTextGreen);
-    document.removeEventListener("mouseup", highlightSelectedTextRed);
+    dislikeButton.checked = false;
   }
 });
 
 dislikeButton.addEventListener("change", function () {
   if (this.checked) {
-    document.removeEventListener("mouseup", highlightSelectedTextGreen);
-    document.addEventListener("mouseup", highlightSelectedTextRed);
+    likeButton.checked = false;
   }
 });
 
-function highlightSelectedTextGreen() {
+document.addEventListener("mouseup", function () {
   const selectedText = getSelectedText();
   if (selectedText) {
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const span = document.createElement("span");
-    span.style.backgroundColor = "green";
-    range.surroundContents(span);
-  }
-}
+    const color = likeButton.checked
+      ? "green"
+      : dislikeButton.checked
+      ? "red"
+      : null;
+    if (color) {
+      const selection = window.getSelection();
+      const range = selection.getRangeAt(0);
+      const span = document.createElement("span");
+      span.style.backgroundColor = color;
+      range.surroundContents(span);
 
-function highlightSelectedTextRed() {
-  const selectedText = getSelectedText();
-  if (selectedText) {
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const span = document.createElement("span");
-    span.style.backgroundColor = "red";
-    range.surroundContents(span);
+      highlights[color].push(span);
+    }
   }
-}
+});
 
 function getSelectedText() {
   let selectedText = "";
