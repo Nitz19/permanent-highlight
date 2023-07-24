@@ -1,30 +1,48 @@
-document.addEventListener("mouseup", function () {
-  var selection = window.getSelection();
-  if (!selection.isCollapsed) {
-    var selectedText = selection.toString();
-    var span = document.createElement("span");
-    span.className = "highlight";
-    span.textContent = selectedText;
+const likeButton = document.getElementById("like");
+const dislikeButton = document.getElementById("dislike");
 
-    var lowerCaseText = selectedText.toLowerCase();
-
-    if (lowerCaseText.includes("like") || lowerCaseText.includes("dislike")) {
-      var words = selectedText.split(" ");
-      for (var i = 0; i < words.length; i++) {
-        var word = words[i].toLowerCase();
-        if (word === "like") {
-          words[i] = '<span class="like-highlight">' + words[i] + "</span>";
-        } else if (word === "dislike") {
-          words[i] = '<span class="dislike-highlight">' + words[i] + "</span>";
-        }
-      }
-      span.innerHTML = words.join(" ");
-    }
-
-    var range = selection.getRangeAt(0);
-    range.deleteContents();
-    range.insertNode(span);
-
-    selection.removeAllRanges();
+likeButton.addEventListener("change", function () {
+  if (this.checked) {
+    document.addEventListener("mouseup", highlightSelectedTextGreen);
+    document.removeEventListener("mouseup", highlightSelectedTextRed);
   }
 });
+
+dislikeButton.addEventListener("change", function () {
+  if (this.checked) {
+    document.removeEventListener("mouseup", highlightSelectedTextGreen);
+    document.addEventListener("mouseup", highlightSelectedTextRed);
+  }
+});
+
+function highlightSelectedTextGreen() {
+  const selectedText = getSelectedText();
+  if (selectedText) {
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const span = document.createElement("span");
+    span.style.backgroundColor = "green";
+    range.surroundContents(span);
+  }
+}
+
+function highlightSelectedTextRed() {
+  const selectedText = getSelectedText();
+  if (selectedText) {
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const span = document.createElement("span");
+    span.style.backgroundColor = "red";
+    range.surroundContents(span);
+  }
+}
+
+function getSelectedText() {
+  let selectedText = "";
+  if (window.getSelection) {
+    selectedText = window.getSelection().toString();
+  } else if (document.selection && document.selection.type !== "Control") {
+    selectedText = document.selection.createRange().text;
+  }
+  return selectedText;
+}
