@@ -3,39 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <title>HUH</title>
+    <link rel="stylesheet" href="style.css" />
+    <title>Highlight-Button</title>
   </head>
   <body>
-    <h1>THIS IS JUST A TEST</h1>
-    <div class="radio">
-      <input type="radio" name="likeDislike" value="like" id="like" />
-      <label for="like">Like</label>
-      <input type="radio" name="likeDislike" value="dislike" id="dislike" />
-      <label for="dislike">Dislike</label>
-    </div>
-    <p>
-      Lorem ipsum dolor adipiscing elit, sed LIKE do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam, DISLIKE quis
-      nostrud exercitation ullamco like laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      dislike cillum dolore like eu fugiat nulla pariatur. Excepteur sint
-      occaecat cupidatat non proident, sunt in dislike culpa qui officia
-      deserunt like mollit anim id est laborum. Lorem ipsum dolor adipiscing
-      elit, sed LIKE do eiusmod tempor incididunt ut labore et dolore magna
-      aliqua. Ut enim ad minim veniam, DISLIKE quis nostrud exercitation ullamco
-      like laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-      dolor in reprehenderit in voluptate velit esse dislike cillum dolore like
-      eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-      sunt in dislike culpa qui officia deserunt like mollit anim id est
-      laborum. Lorem ipsum dolor adipiscing elit, sed LIKE do eiusmod tempor
-      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      DISLIKE quis nostrud exercitation ullamco like laboris nisi ut aliquip ex
-      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse dislike cillum dolore like eu fugiat nulla pariatur. Excepteur
-      sint occaecat cupidatat non proident, sunt in dislike culpa qui officia
-      deserunt like mollit anim id est laborum.
-    </p>
+    <form class="content">
+      <div class="header">
+        <h1>Highlight-Button-Testing</h1>
+        <label>
+          <input
+            type="radio"
+            name="action"
+            value="green"
+            onclick="setHighlightColor(event.target.value);"
+          />
+          Like
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="action"
+            value="red"
+            onclick="setHighlightColor(event.target.value);"
+          />
+          Dislike
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="action"
+            value="yellow"
+            onclick="setHighlightColor(event.target.value);"
+          />
+          Do not understand
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="action"
+            value="transparent"
+            onclick="setHighlightColor(event.target.value);"
+          />
+          Erase
+        </label>
+      </div>
+      <div id="container" onmouseup="handleHighlight()">
+        Randomness and random numbers have traditionally been used for a variety
+        of purposes, for example games such as dice games. With the advent of
+        computers, people recognized the need for a means of introducing
+        randomness into a computer program. Surprising as it may seem, however,
+        it is difficult to get a computer to do something by chance. A computer
+        running a program follows its instructions blindly and is therefore
+        completely predictable.
+      </div>
+    </form>
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>

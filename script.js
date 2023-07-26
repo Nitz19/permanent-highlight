@@ -1,45 +1,49 @@
-const likeButton = document.getElementById("like");
-const dislikeButton = document.getElementById("dislike");
-const highlights = { green: [], red: [] };
+let highlightColor = "green";
 
-likeButton.addEventListener("change", function () {
-  if (this.checked) {
-    dislikeButton.checked = false;
+function setHighlightColor(color) {
+  highlightColor = color;
+}
+
+function handleHighlight() {
+  const highlighted = window.getSelection();
+  if (!highlighted.toString().replace(/\s/g, "")) return;
+
+  const range = highlighted.getRangeAt(0);
+
+  document.designMode = "on";
+
+  if (range) {
+    highlighted.removeAllRanges();
+    highlighted.addRange(range);
   }
-});
 
-dislikeButton.addEventListener("change", function () {
-  if (this.checked) {
-    likeButton.checked = false;
+  if (highlightColor !== "transparent") {
+    document.execCommand("backColor", false, highlightColor);
+  } else {
+    document.execCommand("removeFormat");
   }
-});
 
-document.addEventListener("mouseup", function () {
-  const selectedText = getSelectedText();
-  if (selectedText) {
-    const color = likeButton.checked
-      ? "green"
-      : dislikeButton.checked
-      ? "red"
-      : null;
-    if (color) {
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-      const span = document.createElement("span");
-      span.style.backgroundColor = color;
-      range.surroundContents(span);
+  document.designMode = "off";
+  _();
+  window.getSelection().removeAllRanges();
+}
 
-      highlights[color].push(span);
+function _() {
+  const container = document.getElementById("container");
+  if (!container) return;
+
+  const highlightedSpans = container.getElementsByTagName("span");
+  const data = { like: [], dislike: [], doNotUnderstand: [] };
+
+  for (const span of highlightedSpans) {
+    if (span.classList.contains("highlighted-like")) {
+      data.like.push(span.textContent);
+    } else if (span.classList.contains("highlighted-dislike")) {
+      data.dislike.push(span.textContent);
+    } else if (span.classList.contains("highlighted")) {
+      data.doNotUnderstand.push(span.textContent);
     }
   }
-});
 
-function getSelectedText() {
-  let selectedText = "";
-  if (window.getSelection) {
-    selectedText = window.getSelection().toString();
-  } else if (document.selection && document.selection.type !== "Control") {
-    selectedText = document.selection.createRange().text;
-  }
-  return selectedText;
+  console.log(data);
 }

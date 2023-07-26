@@ -1,11 +1,11 @@
-.highlight {
+.highlighted {
   background-color: yellow;
 }
 
-.like-highlight {
+.highlighted-like {
   background-color: green;
 }
 
-.dislike-highlight {
+.highlighted-dislike {
   background-color: red;
 }
